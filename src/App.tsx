@@ -1,10 +1,10 @@
-import { Pagewrapper } from "./components/Pagewrapper.tsx";
-import { Container } from "./components/Container.tsx";
-import { Header } from "./components/Header.tsx";
-import { Search } from "./components/Search.tsx";
-import { Shortlist } from "./components/Shortlist.tsx";
+import { Pagewrapper } from "./components/Pagewrapper";
+import { Container } from "./components/Container";
+import { Header } from "./components/Header";
+import { Search } from "./components/Search";
+import { Shortlist } from "./components/Shortlist";
 import { Puppylist } from "./components/Puppylist.js";
-import { NewPuppyForm } from "./components/NewPuppyForm.tsx";
+import { NewPuppyForm } from "./components/NewPuppyForm";
 import { puppies } from "./data/puppies.js";
 
 export function App() {
