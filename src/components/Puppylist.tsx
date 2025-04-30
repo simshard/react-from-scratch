@@ -1,6 +1,6 @@
+import { type Puppy } from "../types";
 
-
-export function Puppylist({puppies}) {
+export function Puppylist({ puppies }: { puppies: Puppy[] }) {
     return (
       <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {puppies.map((puppy) => (
@@ -10,8 +10,11 @@ export function Puppylist({puppies}) {
     );
   }
 
+  type PuppyCardProps = {
+    puppy: Puppy;
+  };
 
-function PuppyCard({ puppy }) {
+function PuppyCard({ puppy }:PuppyCardProps) {
   return (
     <li
       key={puppy.id}
