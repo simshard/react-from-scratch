@@ -1,11 +1,11 @@
-import { Pagewrapper } from "./components/Pagewrapper.jsx";
-import { Container } from "./components/Container.jsx";
-import { Header } from "./components/Header.jsx";
-import { Search } from "./components/Search.jsx";
-import { Shortlist } from "./components/Shortlist.jsx";
-import { Puppylist } from "./components/Puppylist.jsx";
-import { NewPuppyForm } from "./components/NewPuppyForm.jsx";
-import { puppies } from "./data/puppies";
+import { Pagewrapper } from "./components/Pagewrapper.tsx";
+import { Container } from "./components/Container.tsx";
+import { Header } from "./components/Header.tsx";
+import { Search } from "./components/Search.tsx";
+import { Shortlist } from "./components/Shortlist.tsx";
+import { Puppylist } from "./components/Puppylist.js";
+import { NewPuppyForm } from "./components/NewPuppyForm.tsx";
+import { puppies } from "./data/puppies.js";
 
 export function App() {
   return (

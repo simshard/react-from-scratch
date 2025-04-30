@@ -1,7 +1,7 @@
 export const puppies = [
     {
       id: 1,
-      name: "Frisket",
+       name: "Frisket",
       trait: "Mother of all pups",
       imagePath: "/images/1.jpg",
     },
