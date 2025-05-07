@@ -1,11 +1,22 @@
+import { Dispatch, SetStateAction } from "react";
 import { type Puppy } from "../types";
 import { LikeToggle } from "./LikeToggle";
 
-export function Puppylist({ puppies }: { puppies: Puppy[] }) {
+export function Puppylist({ puppies, liked, setLiked }: {
+  puppies: Puppy[];
+  liked: Puppy["id"][]; 
+  setLiked: React.Dispatch<React.SetStateAction <Puppy["id"][]> >
+ }) {
     return (
       <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* <li>{JSON.stringify(liked)}</li> */}
         {puppies.map((puppy) => (
-        <PuppyCard key={puppy.id} puppy={puppy} />
+        <PuppyCard 
+        key={puppy.id}
+        puppy={puppy}
+        liked={liked}
+        setLiked={setLiked}
+        />
         ))}
       </ul>
     );
@@ -13,9 +24,11 @@ export function Puppylist({ puppies }: { puppies: Puppy[] }) {
 
   type PuppyCardProps = {
     puppy: Puppy;
+    liked: Puppy["id"][];
+    setLiked: Dispatch<SetStateAction <Puppy["id"][]> >
   };
 
-function PuppyCard({ puppy }:PuppyCardProps) {
+function PuppyCard({ puppy, liked, setLiked }:PuppyCardProps) {
   return (
     <li
       key={puppy.id}
@@ -32,7 +45,7 @@ function PuppyCard({ puppy }:PuppyCardProps) {
           <span className="text-slate-300">·</span>
           <p className="text-slate-500">{puppy.trait}</p>
         </div>
-        <LikeToggle />
+        <LikeToggle id={puppy.id} liked={liked} setLiked={setLiked}/>
       </div>
     </li>
   );
