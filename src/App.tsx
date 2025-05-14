@@ -28,7 +28,7 @@ return(
     <LikedContext value={{liked, setLiked}}>
     <div className="mt-24 grid gap-8 sm:grid-cols-2">
       <Search/>
-      <Shortlist puppies={puppies} liked={liked} setLiked={setLiked}/>
+      <Shortlist puppies={puppies}/>
     </div>
     <Puppylist  puppies={puppies}   />
     </LikedContext>
