@@ -2,17 +2,24 @@ import { Dispatch, SetStateAction } from "react";
 import { type Puppy } from "../types";
 import { LikeToggle } from "./LikeToggle";
 
+
 export function Puppylist({ 
- puppies , liked, setLiked
+ puppies , 
+ searchQuery, 
+ liked, setLiked
  }: {
   puppies: Puppy[];
    liked: Puppy["id"][]; 
-   setLiked: React.Dispatch<React.SetStateAction <Puppy["id"][]> >
+   setLiked: React.Dispatch<React.SetStateAction <Puppy["id"][]> >;
+   searchQuery: string;
  }) {
     return (
       <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {/* <li>{JSON.stringify(liked)}</li> */}
-        {puppies.map((puppy) => (
+        {puppies
+        .filter((pup) =>
+          pup.trait.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .map((puppy) => (
         <PuppyCard 
         key={puppy.id}
         puppy={puppy}

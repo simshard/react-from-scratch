@@ -27,10 +27,10 @@ function Main() {
 return(
   <main>
     <div className="mt-24 grid gap-8 sm:grid-cols-2">
-       <Search /> 
+       <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery}  /> 
       <Shortlist puppies={puppies} liked={liked} setLiked={setLiked} />
     </div>
-    <Puppylist  puppies={puppies}  liked={liked} setLiked={setLiked}  />
+    <Puppylist  puppies={puppies} searchQuery={searchQuery}  liked={liked} setLiked={setLiked}  />
     <NewPuppyForm/> 
   </main>
 )

@@ -1,12 +1,24 @@
-export function Search(){
-    return (   
+import { useRef, Dispatch, SetStateAction } from "react";
+
+export function Search({
+   searchQuery,
+   setSearchQuery
+  }: {
+    searchQuery: string, 
+    setSearchQuery: Dispatch<SetStateAction<string> >;
+  }) {
+     const inputRef = useRef(null);
+     return (   
     <div>
+      <pre> srch.Str: {JSON.stringify(searchQuery)}</pre>
     <label htmlFor="search" className="font-medium">
       Search for a character trait
     </label>
     <div className="mt-2 flex items-center gap-4">
       <input
-        placeholder="playful..."
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder="search..."
         name="search"
         id="search"
         type="text"
