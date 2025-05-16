@@ -12,13 +12,13 @@ export function Search({
     <div>
       <pre> srch.Str: {JSON.stringify(searchQuery)}</pre>
     <label htmlFor="search" className="font-medium">
-      Search for a character trait
+      Filter puppies by trait
     </label>
     <div className="mt-2 flex items-center gap-4">
       <input
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="search..."
+        placeholder="filter..."
         name="search"
         id="search"
         type="text"
