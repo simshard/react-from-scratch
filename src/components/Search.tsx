@@ -11,7 +11,7 @@ export function Search({
      const inputRef = useRef(null);
      return (   
     <div>
-      <pre> srch.Str: {JSON.stringify(searchQuery)}</pre>
+      {/* <pre> srch.Str: {JSON.stringify(searchQuery)}</pre> */}
     <label htmlFor="search" className="font-medium">
       Filter puppies by trait
     </label>
