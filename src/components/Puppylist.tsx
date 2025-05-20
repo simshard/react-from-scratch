@@ -46,7 +46,7 @@ function PuppyCard({ puppy
       className="overflow-clip rounded-lg bg-white shadow-md ring ring-black/5 hover:-translate-y-0.5"
     >
       <img
-        className="aspect-square object-cover"
+        className="aspect-square object-fill"
         alt={puppy.name}
         src={puppy.imagePath}
       />

@@ -3,4 +3,5 @@ export type Puppy = {
     name: string;
     trait: string;
     imagePath: string;
+    //puppies: Puppy[];
   };
