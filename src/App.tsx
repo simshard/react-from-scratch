@@ -19,20 +19,7 @@ export function App() {
   <Pagewrapper>
     <Container>
       <Header />
-      <Main />
-   </Container>
-  </Pagewrapper>
-  );
-}
-
-function Main() {
-  const[liked,setLiked] =useState<Puppy["id"][]>([1]);
-  const [searchQuery, setSearchQuery] = useState<string>(""); 
-  const [puppies, setPuppies] = useState<Puppy[]>(puppiesData);
-return(
-  <> 
-  <main>
-    <ErrorBoundary
+       <ErrorBoundary
         fallbackRender={({ error }) => (
           <div className="mt-12 bg-red-100 p-6 shadow ring ring-black/5">
             <p className="text-red-500">
@@ -48,10 +35,26 @@ return(
             </div>
           }
         >
-          <ApiPuppies />
+      <Main />
       </Suspense>
-    </ErrorBoundary>
-         
+      </ErrorBoundary>
+   </Container>
+  </Pagewrapper>
+  );
+}
+
+const puppyPromise = getPuppies();
+
+function Main() {
+  const apiPuppies = use(puppyPromise);
+  const[liked,setLiked] =useState<Puppy["id"][]>([1]);
+  const [searchQuery, setSearchQuery] = useState<string>(""); 
+  const [puppies, setPuppies] = useState<Puppy[]>(apiPuppies);
+
+  console.log({puppies});
+  
+return(
+  <main>  
     <div className="mt-24 grid gap-8 sm:grid-cols-2">
        <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery}  /> 
       <Shortlist puppies={puppies} liked={liked} setLiked={setLiked} />
@@ -59,17 +62,5 @@ return(
     <Puppylist  puppies={puppies} searchQuery={searchQuery}  liked={liked} setLiked={setLiked}  />
     <NewPuppyForm puppies={puppies} setPuppies={setPuppies}/> 
   </main>
-  </>
 )
-}
-
-const puppyPromise = getPuppies();
-
-function ApiPuppies() {
-  const apiPuppies = use(puppyPromise);
-    return (
-     <div className="mt-12 bg-green-100 p-6 shadow ring ring-black/5">
-      <pre>{JSON.stringify(apiPuppies, null, 2)}</pre>
-      </div>
-    );
 }

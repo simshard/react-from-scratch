@@ -4,7 +4,7 @@ import { Puppy } from "../types";
 export const LikedContext = createContext<{
     liked: Puppy["id"][],
     setLiked: Dispatch<SetStateAction<Puppy["id"][]> > | null
-    }>(null);
+    }>({liked: [], setLiked: null});
 
 export function useLiked() {
     const context = use(LikedContext);

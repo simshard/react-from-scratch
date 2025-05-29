@@ -40,7 +40,7 @@ export function Shortlist({
                   width={32}
                   alt={puppy.name}
                   className="aspect-square w-8 object-cover"
-                  src={puppy.imagePath}
+                  src={puppy.image_url}
                 />
                 <p className="px-3 text-sm text-slate-800">{puppy.name}</p>
                 <button
