@@ -6,10 +6,11 @@ import { Shortlist } from "./components/Shortlist";
 import { Puppylist } from "./components/Puppylist.js";
 import { NewPuppyForm } from "./components/NewPuppyForm";
 import { puppies as puppiesData} from "./data/puppies.js";
-import { use, useState,useEffect } from "react";
+import { Suspense, use, useState } from "react";
 import { Puppy } from "./types";
 import { LoaderCircle } from "lucide-react";
-//import { LikedContext } from "./context/liked-context";
+import { getPuppies } from "./queries/index.ts";
+import { ErrorBoundary } from "react-error-boundary";
 
 
 
@@ -29,8 +30,28 @@ function Main() {
   const [searchQuery, setSearchQuery] = useState<string>(""); 
   const [puppies, setPuppies] = useState<Puppy[]>(puppiesData);
 return(
+  <> 
   <main>
-    <ApiPuppies/> 
+    <ErrorBoundary
+        fallbackRender={({ error }) => (
+          <div className="mt-12 bg-red-100 p-6 shadow ring ring-black/5">
+            <p className="text-red-500">
+              {error.message}: {error.details}
+            </p>
+          </div>
+        )}
+      >
+     <Suspense
+          fallback={
+            <div className="mt-12 bg-white p-6 shadow ring ring-black/5">
+              <LoaderCircle className="animate-spin stroke-red-600" />
+            </div>
+          }
+        >
+          <ApiPuppies />
+      </Suspense>
+    </ErrorBoundary>
+         
     <div className="mt-24 grid gap-8 sm:grid-cols-2">
        <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery}  /> 
       <Shortlist puppies={puppies} liked={liked} setLiked={setLiked} />
@@ -38,49 +59,17 @@ return(
     <Puppylist  puppies={puppies} searchQuery={searchQuery}  liked={liked} setLiked={setLiked}  />
     <NewPuppyForm puppies={puppies} setPuppies={setPuppies}/> 
   </main>
+  </>
 )
 }
 
+const puppyPromise = getPuppies();
+
 function ApiPuppies() {
-  const [puppies, setPuppies] = useState<[]>([]);  
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string >("");
-   useEffect(() => {
-    //fetch puppies
-     async function getPuppies ()  {
-      setIsLoading(true);
-      try {
-    const response = await fetch("http://localhost:8000/api/puppies");
-    if(!response.ok) {
-      const errorData = await response.json();
-      setError(`${errorData.code}: ${errorData.message}`);
-      throw errorData;
-    }
-    const data = await response.json();
-    //console.log(data);
-    setPuppies(data);
-    }
-    catch (error) {
-      console.log(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
-     }
-     getPuppies();
-
-     }, []);
-
+  const apiPuppies = use(puppyPromise);
     return (
-      <div className="bg-white p-6 mt-12 shadow ring ring-black/5">
-        <h2 className="flex items-center gap-2 font-medium">
-          <span>Api puppies</span></h2>
-          {isLoading ? (
-            <LoaderCircle className="animate-spin stroke-red-600" />
-          ):( <pre>{JSON.stringify(puppies, null, 2)}</pre>)
-          }
-         
-        
+     <div className="mt-12 bg-green-100 p-6 shadow ring ring-black/5">
+      <pre>{JSON.stringify(apiPuppies, null, 2)}</pre>
       </div>
     );
 }

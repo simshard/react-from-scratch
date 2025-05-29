@@ -6,7 +6,16 @@
       "importHelpers": true,
       "isolatedModules": true,
       "noEmit": true,
-      "jsx": "react-jsx"
+      "jsx": "react-jsx",
+       "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true
     },
     "include": ["src"]
   }
