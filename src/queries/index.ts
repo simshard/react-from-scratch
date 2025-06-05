@@ -19,3 +19,27 @@ export async function getPuppies ()  {
       throw error;
     }
 }
+
+export async function toggleLikedStatus(puppyId: number) {
+  try {
+    const response = await fetch(`http://localhost:8000/api/puppies/${puppyId}/like`, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error (errorData.message); 
+    }
+
+     const { data: updatedPuppy } = await response.json();
+    // console.log(updatedPuppy);
+    return updatedPuppy;
+    
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}

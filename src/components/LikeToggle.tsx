@@ -1,41 +1,39 @@
 import { Heart ,LoaderCircle} from "lucide-react";
 import { Puppy } from "../types";
 import { Dispatch, SetStateAction, useState } from "react";
-//import { useLiked } from "../context/liked-context";
+import { toggleLikedStatus } from "../queries";
 
 export function LikeToggle({
-  id,
-  liked,
-  setLiked,
-  }: {
-  id: Puppy["id"];
-  liked: Puppy["id"][];
-  setLiked: Dispatch<SetStateAction<Puppy["id"][]> >;
-  }) {
+  puppy,setPuppies
+}: {
+  puppy: Puppy;
+  setPuppies: Dispatch<SetStateAction<Puppy[]> >;
+}) {
     const [pending, setPending ]= useState(false);
+    const likedBy = puppy.likedBy;
+
+
         return (
             <button className="group"
-              onClick={() => {
+              onClick={async() => {
                 setPending(true);
-                setTimeout(() => {
-                  if (liked.includes(id)) {
-                  setLiked(liked.filter((puppyId) => puppyId !== id));
-                } else {
-                  setLiked([...liked, id]);
-                } 
-               setPending(false);
-                },1000);
-                
+                const updatedPuppy= await toggleLikedStatus(puppy.id);
+                console.log(updatedPuppy);
+                setPuppies((prevPups) => {
+                  return prevPups.map((existingPuppy) =>
+                    existingPuppy.id === updatedPuppy.id ? updatedPuppy : existingPuppy,
+                  );
+                })
+                setPending(false);  
               }
-            }
-             >
-              {/* <pre>{JSON.stringify(pending)}</pre> */}
+             }
+            >
             {pending ? (  <LoaderCircle className="animate-spin stroke-red-300" />) : (
             <Heart
               className={
-                liked.includes(id)
+                likedBy.includes(1)
                   ? "fill-pink-500 stroke-none"
-                  : "stroke-slate-200 group-hover:stroke-slate-300"
+                  : "stroke-slate-200 group-hover:stroke-slate-300"   
               }
             />
             )}

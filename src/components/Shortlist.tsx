@@ -1,27 +1,16 @@
-import  {use, Dispatch, SetStateAction} from "react";
-//import { useLiked } from "../context/liked-context";
 import { Puppy } from "../types";
-import { X } from "lucide-react";
-import { Heart } from "lucide-react";
- 
-interface ShortlistProps {
-    liked: Puppy["id"][];
-    setLiked: Dispatch<SetStateAction<Puppy["id"][]> >;
-  }
-
+import { Loader, LoaderCircle, X , Heart} from "lucide-react";
+import { toggleLikedStatus } from "../queries";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export function Shortlist({
-  puppies,
-  liked,
-  setLiked,
+  puppies,setPuppies,
  }:
    {
     puppies: Puppy[];
-    liked: Puppy["id"][];
-    setLiked: Dispatch<SetStateAction<Puppy["id"][]> >;
+    setPuppies: Dispatch<SetStateAction<Puppy[]>>;
     }
 ) {
-   // const{liked, setLiked} = useLiked();
         return (
             <div>
             <h2 className="flex items-center gap-2 font-medium">
@@ -30,7 +19,7 @@ export function Shortlist({
             </h2>
             <ul className="mt-4 flex flex-wrap gap-4">
             {puppies
-          .filter((pup) => liked.includes(pup.id))
+          .filter((pup) => pup.likedBy.includes(1))
           .map((puppy) => (
               <li 
               key={puppy.id}
@@ -43,14 +32,42 @@ export function Shortlist({
                   src={puppy.image_url}
                 />
                 <p className="px-3 text-sm text-slate-800">{puppy.name}</p>
-                <button
-                onClick={() => setLiked(liked.filter((id) => id !== puppy.id))} 
-                className="group h-full border-l border-slate-100 px-2 hover:bg-slate-100">
-                <X className="size-4 stroke-slate-400 group-hover:stroke-red-400" />
-                </button>
+              <DeleteButton id={puppy.id} setPuppies={setPuppies} />
               </li>
                ))}
             </ul>
           </div>
         );
     }
+
+    function DeleteButton({
+  id,
+  setPuppies,
+}: {
+  id: Puppy["id"];
+  setPuppies: Dispatch<SetStateAction<Puppy[]>>;
+}) {
+  const [pending, setPending] = useState(false);
+  return (
+    <button
+      onClick={async () => {
+        setPending(true);
+        const updatedPuppy = await toggleLikedStatus(id);
+        setPuppies((prevPups) => {
+          return prevPups.map((puppy) =>
+            puppy.id === updatedPuppy.id ? updatedPuppy : puppy,
+          );
+        });
+        setPending(false);
+      }}
+      className="group h-full border-l border-slate-100 px-2 hover:bg-slate-100"
+      disabled={pending}
+    >
+      {pending ? (
+        <LoaderCircle className="size-4 animate-spin stroke-slate-300" />
+      ) : (
+        <X className="size-4 stroke-slate-400 group-hover:stroke-red-400" />
+      )}
+    </button>
+  );
+}
