@@ -43,7 +43,7 @@ function PuppyCard({ puppy, setPuppies}:PuppyCardProps) {
       <img
         className="aspect-square object-fill"
         alt={puppy.name}
-        src={puppy.image_url}
+        src={ puppy.image_url}
       />
       <div className="gap flex items-center justify-between p-4 text-sm">
         <div className="flex items-center gap-2">
